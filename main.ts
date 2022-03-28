@@ -15,7 +15,7 @@ radio.onReceivedNumber(function (receivedNumber) {
 })
 function LCD () {
     NPNLCD.clear()
-    NPNLCD.ShowString("\"people in room\"", 0, 0)
+    NPNLCD.ShowString("People in room:", 0, 0)
     NPNLCD.ShowNumber(count_people, 0, 1)
 }
 function IR_sensor () {
@@ -28,6 +28,8 @@ function IR_sensor () {
 function Magnetic_in () {
     if (NPNBitKit.ButtonDoorOpen(DigitalPin.P5)) {
         count_people += count_people + 1
+        radio.sendString("!1:PEOPLE" + count_people + "#")
+        radio.sendString("!1:INPEOPLE:1#")
         if (count_people > 10) {
             NPNBitKit.Buzzer(DigitalPin.P4, true)
             basic.pause(5000)
@@ -36,6 +38,8 @@ function Magnetic_in () {
 }
 function Magnetic_out () {
     if (NPNBitKit.ButtonDoorOpen(DigitalPin.P6)) {
+        radio.sendString("!1:PEOPLE" + count_people + "#")
+        radio.sendString("!1:OUTPEOPLE:1#")
         count_people += count_people - 1
     }
 }
@@ -43,7 +47,7 @@ let count_people = 0
 radio.setGroup(1)
 count_people = 0
 NPNLCD.LcdInit()
-NPNLCD.ShowString("\" Welcome to my room\"", 0, 0)
+NPNLCD.ShowString("Welcome to my room", 0, 0)
 basic.forever(function () {
     IR_sensor()
     Magnetic_in()
