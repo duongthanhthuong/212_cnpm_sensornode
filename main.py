@@ -7,10 +7,6 @@ radio.onReceivedNumber(function (receivedNumber) {
         NPNBitKit.Buzzer(DigitalPin.P4, true)
     } else if (receivedNumber == 5) {
         NPNBitKit.Buzzer(DigitalPin.P4, false)
-    } else if (receivedNumber == 0) {
-        NPNBitKit.Led2Color(DigitalPin.P0, true, DigitalPin.P6, false)
-    } else if (receivedNumber == 1) {
-        NPNBitKit.Led2Color(DigitalPin.P0, false, DigitalPin.P6, false)
     }
 })
 function LCD () {
